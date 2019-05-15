@@ -7,6 +7,7 @@ import ch.heigvd.sitr.autogen.opendrive.OpenDRIVE.Controller.Control;
 import ch.heigvd.sitr.autogen.opendrive.OpenDRIVE.Road;
 import ch.heigvd.sitr.autogen.opendrive.OpenDRIVE.Road.Lanes.LaneSection;
 import ch.heigvd.sitr.autogen.opendrive.OpenDRIVE.Road.PlanView.Geometry;
+import ch.heigvd.sitr.autogen.opendrive.Lane.Link;
 
 import ch.heigvd.sitr.map.Lane;
 import ch.heigvd.sitr.map.Lane.LaneSectionType;
@@ -87,6 +88,13 @@ public class OpenDriveHandler {
      * @param roadNetwork The road network that will be built from generated data
      */
     private void createRoadSegments(OpenDRIVE openDriveNetwork, RoadNetwork roadNetwork) {
+        Link q = openDriveNetwork.getRoad().get(1).getLanes().getLaneSection().get(0).getRight().getLane().get(0).getLink();
+        int w = 0;
+        if(q != null){
+            w = q.getPredecessor().getId();
+        }
+        String e = String.valueOf(w);
+        LOG.log(Level.INFO, e);
         for (Road road : openDriveNetwork.getRoad()) {
             final RoadMapping roadMapping = createRoadMappings(road);
             for (LaneSectionType laneType : Lane.LaneSectionType.values()) {
@@ -139,10 +147,11 @@ public class OpenDriveHandler {
         LaneSection laneSection = road.getLanes().getLaneSection().get(0);
         List<ch.heigvd.sitr.autogen.opendrive.Lane> lanes = (laneType == LaneSectionType.LEFT) ?
                 laneSection.getLeft().getLane() : laneSection.getRight().getLane();
+        int successorRoadId = Integer.valueOf(road.getLink().getSuccessor().getElementId());
 
         // TODO (tum) manage reverse direction
         final RoadSegment roadSegment = new RoadSegment(roadMapping.getRoadLength(),
-                lanes.size(), roadMapping);
+                lanes.size(), roadMapping, successorRoadId, lanes);
 
         // Set user id
         String userId = road.getId();

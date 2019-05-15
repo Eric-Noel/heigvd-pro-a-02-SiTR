@@ -16,6 +16,10 @@ public class LaneSegment implements Iterable<Vehicle> {
     @Getter
     private final int lane;             // Physical lane
     private Lane.Type type;             // Lane segment's type
+    @Getter
+    private int successorRoadId;          // The successor road id
+    @Getter
+    private int successorLaneId;          // The successor lane id
 
     private List<Vehicle> vehicles = new ArrayList<>(); // List of vehicles in the lane segment
 
@@ -25,9 +29,11 @@ public class LaneSegment implements Iterable<Vehicle> {
      * @param roadSegment The road segment which the lane segment belongs to
      * @param lane The lane segment's physical lane
      */
-    LaneSegment(RoadSegment roadSegment, int lane) {
+    LaneSegment(RoadSegment roadSegment, int lane, int successorRoadId, int successorLaneId) {
         this.roadSegment = roadSegment;
         this.lane = lane;
+        this.successorRoadId = successorRoadId;
+        this.successorLaneId = successorLaneId;
     }
 
     /**

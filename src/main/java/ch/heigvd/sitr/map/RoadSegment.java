@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * This class represents a road segment that contains a number of lane segments
@@ -23,6 +24,7 @@ public class RoadSegment implements Iterable<Vehicle> {
     private final double roadLength;            // RoadSegment's length
     @Getter
     private final int laneCount;                // RoadSegment's number of lane
+    @Getter
     private final LaneSegment laneSegments[];   // RoadSegment contains lane segments
 
     @Getter
@@ -34,11 +36,12 @@ public class RoadSegment implements Iterable<Vehicle> {
      * @param roadLength Length of the road
      * @param laneCount  Number of lane in the road segment
      */
-    public RoadSegment(double roadLength, int laneCount) {
+    public RoadSegment(double roadLength, int laneCount, int successorRoadId, List<ch.heigvd.sitr.autogen.opendrive.Lane> lanes ) {
         laneSegments = new LaneSegment[laneCount];
 
         for (int i = 0; i < laneCount; ++i) {
-            laneSegments[i] = new LaneSegment(this, i + 1);
+            laneSegments[i] = new LaneSegment(this, i + 1,
+                    successorRoadId, lanes.get(i).getLink().getSuccessor().getId());
         }
 
         id = counter++;
@@ -53,8 +56,9 @@ public class RoadSegment implements Iterable<Vehicle> {
      * @param laneCount The number of lane in the road segment
      * @param roadMapping The road mapping
      */
-    public RoadSegment(double roadLength, int laneCount, RoadMapping roadMapping) {
-        this(roadLength, laneCount);
+    public RoadSegment(double roadLength, int laneCount, RoadMapping roadMapping,
+                       int successorRoadId, List<ch.heigvd.sitr.autogen.opendrive.Lane> lanes) {
+        this(roadLength, laneCount, successorRoadId, lanes);
         this.roadMapping = roadMapping;
     }
 
