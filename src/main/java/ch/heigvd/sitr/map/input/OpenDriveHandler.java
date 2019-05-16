@@ -88,13 +88,14 @@ public class OpenDriveHandler {
      * @param roadNetwork The road network that will be built from generated data
      */
     private void createRoadSegments(OpenDRIVE openDriveNetwork, RoadNetwork roadNetwork) {
+        /* A supprimer si les lien entre route fonctionn
         Link q = openDriveNetwork.getRoad().get(1).getLanes().getLaneSection().get(0).getRight().getLane().get(0).getLink();
         int w = 0;
         if(q != null){
             w = q.getPredecessor().getId();
         }
         String e = String.valueOf(w);
-        LOG.log(Level.INFO, e);
+        LOG.log(Level.INFO, e);*/
         for (Road road : openDriveNetwork.getRoad()) {
             final RoadMapping roadMapping = createRoadMappings(road);
             for (LaneSectionType laneType : Lane.LaneSectionType.values()) {

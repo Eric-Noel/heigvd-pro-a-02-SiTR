@@ -15,14 +15,12 @@
                 <right>
                     <lane id="2" type="driving" level= "0">
                         <link>
-                            <predecessor id="0"/>
                             <successor id="2"/>
                         </link>
                         <width sOffset="0" a="10" b="0" c="0" d="0"/>
                     </lane>
                     <lane id="1" type="driving" level= "0">
                         <link>
-                            <predecessor id="0"/>
                             <successor id="1"/>
                         </link>
                         <width sOffset="0" a="10" b="0" c="0" d="0"/>
@@ -45,14 +43,12 @@
                 <right>
                     <lane id="2" type="driving" level= "0">
                         <link>
-                            <predecessor id="2"/>
                             <successor id="0"/>
                         </link>
                         <width sOffset="0" a="10" b="0" c="0" d="0"/>
                     </lane>
                     <lane id="1" type="driving" level= "0">
                         <link>
-                            <predecessor id="1"/>
                             <successor id="0"/>
                         </link>
                         <width sOffset="0" a="10" b="0" c="0" d="0"/>
