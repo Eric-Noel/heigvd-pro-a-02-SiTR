@@ -77,7 +77,7 @@ public class Vehicle extends Observable implements Renderable {
     // Rectangle of the car on the map
     @Getter
     private Rectangle rectangle;
-
+    
     // Color of the vehicle
     @Getter
     @Setter
@@ -86,11 +86,11 @@ public class Vehicle extends Observable implements Renderable {
     // Color when in accident
     private final Color accidentColor = Color.white;
 
-    // nb of accidents
+    // Nb of accidents
     @Getter
-    private int accidents;
+    private int nbOfAccidents;
 
-    // is this vehicle in an accident
+    // Is this vehicle in an accident
     @Getter
     private boolean inAccident;
 
@@ -98,6 +98,15 @@ public class Vehicle extends Observable implements Renderable {
     @Getter
     @Setter
     private boolean customColor;
+
+    // Is the vehicle drawing its path
+    @Getter
+    @Setter
+    private boolean drawingPath;
+
+    // Vehicle wait time
+    @Getter
+    private double waitingTime;
 
     /**
      * Constructor
@@ -182,8 +191,8 @@ public class Vehicle extends Observable implements Renderable {
     public void setPosition(double position) {
         // If it exceed the itinerary path length,
         // we add the excess to the position on the next itinerary path
-        if (position > currentPath().norm()) {
-            position -= currentPath().norm();
+        if (position > currentPath().length()) {
+            position -= currentPath().length();
             moveToNextPath();
         }
 
@@ -271,13 +280,13 @@ public class Vehicle extends Observable implements Renderable {
         int path = getPathStep();
 
         if (position > frontVehicle.position && itinerary.get(path).equals(frontVehicle.currentPath())) {
-            frontDistance += itinerary.get(path).norm(); // Add the whole path distance
+            frontDistance += itinerary.get(path).length(); // Add the whole path distance
             path = (path + 1) % itinerarySize();
         }
 
         // Add all itinerary path distance in between
         while (!itinerary.get(path).equals(frontVehicle.currentPath())) {
-            frontDistance += itinerary.get(path).norm(); // Add the whole path distance
+            frontDistance += itinerary.get(path).length(); // Add the whole path distance
             path = (path + 1) % itinerarySize();
         }
 
@@ -373,7 +382,7 @@ public class Vehicle extends Observable implements Renderable {
 
         // if frontDistance is <= 0, an accident occurred, if not already in accident
         if (frontDistance <= 0 && !inAccident) {
-            accidents++;
+            nbOfAccidents++;
             inAccident = true;
 
             // stop this vehicle
@@ -476,7 +485,7 @@ public class Vehicle extends Observable implements Renderable {
         ret += " || v: " + speed;
         ret += " || frontDistance: " + frontDistance();
         ret += " || noise: " + ((accelerationNoise != null) ? accelerationNoise.getAccelerationNoise() : "0");
-        ret += " || accident " + accidents;
+        ret += " || accident " + nbOfAccidents;
 
         return ret;
     }
