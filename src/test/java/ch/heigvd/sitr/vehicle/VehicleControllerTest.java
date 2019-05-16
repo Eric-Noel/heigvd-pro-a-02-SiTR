@@ -27,12 +27,12 @@ public class VehicleControllerTest {
     private Vehicle frontVehicle;
     private LinkedList<ItineraryPath> defaultItinerary = new LinkedList<>();
 
-    @BeforeEach
+    /*@BeforeEach
     public void createDummyItinerary() {
         RoadSegment roadSegment = new RoadSegment(10000, 1, new RoadMappingLine(new LaneGeometries(), 0, 0, 0, 0, 10000));
         ItineraryPath itineraryPath = new ItineraryPath(roadSegment, 1);
         defaultItinerary.add(itineraryPath);
-    }
+    }*/
 
     @BeforeEach
     public void createDummyVehicleController() {
